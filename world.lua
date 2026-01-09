@@ -6,7 +6,7 @@ World = {
     running = true
 }
 
--- Adds etnity to the world
+-- Adds entity to the world
 function World:add(name)
     local e = { name = name, energy = 10 }
     table.insert(self.entities, e)
@@ -38,30 +38,27 @@ function World:update()
     end
 
     -- Rare miracle
-    if self.tick == 5 then
+    if self.tick == 5 and Miracles then
         Miracles.heal_all(5)
     end
-end
 
--- Easter eggs
-if self.tick == 7 then
-    print("\n[?] The voice whispers: \"It began with some simple curiosity and passion, didn't it, Icarus?\"")
+    -- Easter eggs moved inside update()
+    if self.tick == 7 then
+        print("\n[?] The voice whispers: \"It began with some simple curiosity and passion, didn't it, Icarus?\"")
+    elseif self.tick == 42 then
+        print("\n[?] The voice whispers: \"You're doing such a great job, you're making mother proud.\"")
+    elseif self.tick == 108 then
+        print("\n[?] The voice whispers: \"Don't stop here. The fun has just started.\"")
+    end
 end
-
-if self.tick == 42 then
-    print("\n[?] The voice whispers: \"You're doing such a great job, you're making mother proud.\"")
-end
-
-if self.tick == 108 then
-    print("\n[?] The voice whispers: \"Don't stop here. The fun has just started.\"")
-end
-
 
 -- loops the world
 function World:start()
     while #self.entities > 0 do
         self:update()
-        os.execute("timeout /t 1 > nul")
+        os.execute("timeout /t 1 > nul")  -- works on Windows
     end
     print("The world is empty.")
 end
+
+
